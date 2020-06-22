@@ -1,0 +1,43 @@
+from django.urls import path
+from api import views
+
+app_name = 'api'
+
+urlpatterns = [
+    path('addiction/', views.addiction_questions_list),
+    path('addiction/<int:pk>', views.addiction_question_detail),
+    path('anxiety/', views.anxiety_questions_list),
+    path('anxiety/<int:pk>', views.anxiety_question_detail),
+    path('dass/', views.dass_questions_list),
+    path('dass/<int:pk>', views.dass_question_detail),
+    path('depression/', views.depression_questions_list),
+    path('depression/<int:pk>', views.depression_question_detail),
+    path('hostility/', views.hostility_questions_list),
+    path('hostility/<int:pk>', views.hostility_question_detail),
+    path('interpersonal-sensitivity/', views.interpersonal_sensitivity_questions_list),
+    path('interpersonal-sensitivity/<int:pk>', views.interpersonal_sensitivity_question_detail),
+    path('neuroticism/', views.neuroticism_questions_list),
+    path('neuroticism/<int:pk>', views.neuroticism_question_detail),
+    path('ocd/', views.ocd_questions_list),
+    path('ocd/<int:pk>', views.ocd_question_detail),
+    path('paranoia/', views.paranoia_questions_list),
+    path('paranoia/<int:pk>', views.paranoia_question_detail),
+    path('parent-pediatric-symptom/', views.parent_pediatric_symptom_questions_list),
+    path('parent-pediatric-symptom/<int:pk>', views.parent_pediatric_symptom_question_detail),
+    path('personal-health/', views.personal_health_questions_list),
+    path('personal-health/<int:pk>', views.personal_health_question_detail),
+    path('personality/', views.personality_questions_list),
+    path('personality/<int:pk>', views.personality_question_detail),
+    path('phobia/', views.phobia_questions_list),
+    path('phobia/<int:pk>', views.phobia_question_detail),
+    path('psychoticism/', views.psychoticism_questions_list),
+    path('psychoticism/<int:pk>', views.psychoticism_question_detail),
+    path('sleep-apnea/', views.sleep_apnea_questions_list),
+    path('sleep-apnea/<int:pk>', views.sleep_apnea_question_detail),
+    path('somatization/', views.somatization_questions_list),
+    path('somatization/<int:pk>', views.somatization_question_detail),
+    path('stress-test/', views.stress_test_questions_list),
+    path('stress-test/<int:pk>', views.stress_test_question_detail),
+    path('youth-pediatric-symptom/', views.youth_pediatric_symptom_questions_list),
+    path('youth-pediatric-symptom/<int:pk>', views.youth_pediatric_symptom_question_detail),
+]
