@@ -1021,3 +1021,25 @@ def youth_pediatric_symptom_question_detail(request, pk):
 
 
 
+#get all tests
+@api_view(['GET',])
+@authentication_classes([BasicAuthentication, SessionAuthentication])
+@permission_classes([IsAuthenticated])
+def test_list(request):
+    if request.method == 'GET':
+        questions = Test.objects.all()
+        serializer = TestSerializer(questions, many =True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    elif request.method == 'POST':
+        serializer = TestSerializer(data = request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+
+        else:
+            return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+

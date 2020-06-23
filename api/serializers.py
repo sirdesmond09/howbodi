@@ -95,3 +95,8 @@ class YouthsPediatricSymptomSerializer(serializers.ModelSerializer):
     class Meta:
         model = YouthsPediatricSymptomQuestion
         fields = '__all__'
+
+class TestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Test
+        fields = '__all__'        

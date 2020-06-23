@@ -38,6 +38,7 @@ urlpatterns = [
     path('somatization/<int:pk>', views.somatization_question_detail),
     path('stress-test/', views.stress_test_questions_list),
     path('stress-test/<int:pk>', views.stress_test_question_detail),
+    path('tests/', views.stress_test_questions_list),
     path('youth-pediatric-symptom/', views.youth_pediatric_symptom_questions_list),
     path('youth-pediatric-symptom/<int:pk>', views.youth_pediatric_symptom_question_detail),
 ]
