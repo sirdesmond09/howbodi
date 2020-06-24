@@ -20,5 +20,6 @@ from main.views import add_question
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', add_question),
-    path('api/', include('api.urls', namespace = 'api'))
+    path('api/', include('api.urls', namespace = 'api')),
+    path('account/', include('account.urls', namespace = 'account'))
 ]
