@@ -1023,6 +1023,8 @@ def youth_pediatric_symptom_question_detail(request, pk):
 
 #get all tests
 @api_view(['GET',])
+@authentication_classes([BasicAuthentication, SessionAuthentication])
+@permission_classes([IsAuthenticated])
 def test_list(request):
     if request.method == 'GET':
         questions = Test.objects.all()
