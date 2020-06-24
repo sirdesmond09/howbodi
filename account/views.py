@@ -21,10 +21,8 @@ def add_user(request):
     elif request.method == 'POST':
 
         serializer = UserSerializer(data = request.data)
-
+        
         if serializer.is_valid():
-           
-
             serializer.save()
 
             return Response(serializer.data, status = status.HTTP_201_CREATED)
