@@ -15,11 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from main.views import add_question
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', add_question),
-    path('api/', include('api.urls', namespace = 'api')),
+    path('api/', include('main.urls', namespace = 'main')),
     path('account/', include('account.urls', namespace = 'account'))
 ]

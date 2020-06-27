@@ -1,7 +1,7 @@
 from django.urls import path
-from api import views
+from main import views
 
-app_name = 'api'
+app_name = 'main'
 
 urlpatterns = [
     path('addiction/', views.addiction_questions_list),
@@ -14,6 +14,8 @@ urlpatterns = [
     path('depression/<int:pk>', views.depression_question_detail),
     path('hostility/', views.hostility_questions_list),
     path('hostility/<int:pk>', views.hostility_question_detail),
+    path('insomnia/', views.insomnia_questions_list),
+    path('insomnia/<int:pk>', views.insomnia_question_detail),
     path('interpersonal-sensitivity/', views.interpersonal_sensitivity_questions_list),
     path('interpersonal-sensitivity/<int:pk>', views.interpersonal_sensitivity_question_detail),
     path('neuroticism/', views.neuroticism_questions_list),
