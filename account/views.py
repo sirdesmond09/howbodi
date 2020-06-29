@@ -78,7 +78,7 @@ def add_member(request):
 
     elif request.method == 'POST':
         
-        serializer = MemberSerializer(data = request.data, many = True)
+        serializer = MemberSerializer(data = request.data)
         
         if serializer.is_valid():
             if not serializer.data['entity']:
