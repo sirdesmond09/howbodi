@@ -5,16 +5,21 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.contrib.auth.hashers import check_password
 
 from .managers import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     company_name  = models.CharField(_('company name'),max_length = 250)
+    cac_reg_no    = models.CharField(_('Registration number'), max_length=50)
     email        = models.EmailField(_('email'), unique=True)
     phone        = models.CharField(_('phone'), max_length = 20, null = True)
     address      = models.CharField(_('address'), max_length = 250, null = True)
-    token        = models.CharField(_("token"), max_length=300, blank = True)
+    state      = models.CharField(_('state'), max_length = 250, null = True)
+    local_gov      = models.CharField(_('local government'), max_length = 250, null = True)
+    industry      = models.CharField(_('industry'), max_length = 250, null = True)
+    staff_pop    = models.IntegerField(_('staff population'))
     password     = models.CharField(_('password'), max_length=300)
     is_staff     = models.BooleanField(_('staff'), default=False)
     is_individual  = models.BooleanField(_('individual'), default=False)
@@ -51,3 +56,14 @@ class Member(models.Model):
     def __str__(self):
         return self.email
     
+    def check_password(self, raw_password):
+        """
+        Return a boolean of whether the raw_password was correct. Handles
+        hashing formats behind the scenes.
+        """
+        def setter(raw_password):
+            self.set_password(raw_password)
+            # Password hash upgrades shouldn't be considered password changes.
+            self._password = None
+            self.save(update_fields=["password"])
+        return check_password(raw_password, self.password, setter)

@@ -136,3 +136,12 @@ AUTH_USER_MODEL = 'account.User'
 
 CORS_ORIGIN_ALLOW_ALL = True # If this is used then `CORS_ORIGIN_WHITELIST` will not have any effect
 CORS_ALLOW_CREDENTIALS = True
+
+
+#User Authentication
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.CustomUserAuthBackend',
+    'account.authentication.CustomMemberAuthBackend',
+
+]

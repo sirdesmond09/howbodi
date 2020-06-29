@@ -9,6 +9,8 @@ from .serializers import UserSerializer, MemberSerializer
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.hashers import make_password
 
+from django.contrib.auth import authenticate
+
 
 @api_view(['GET', 'POST'])
 # @authentication_classes([TokenAuthentication])
@@ -76,7 +78,7 @@ def add_member(request):
 
     elif request.method == 'POST':
         
-        serializer = MemberSerializer(data = request.data)
+        serializer = MemberSerializer(data = request.data, many = True)
         
         if serializer.is_valid():
             if not serializer.data['entity']:
@@ -119,3 +121,24 @@ def add_member(request):
             return Response(data, status = status.HTTP_400_BAD_REQUEST)
 
 
+@api_view([ 'POST'])
+def logins(request):
+    
+    if request.method == "POST":
+        
+        user = authenticate(request, email = request.data['email'], password = request.data['password'])
+        if user is not None:
+            data = {
+                'status'  : status.HTTP_202_ACCEPTED,
+                'message' : "Authenticated successfully",
+                'data' : request.data,
+            }
+
+            return Response(data, status=status.HTTP_202_ACCEPTED)
+        else:
+            data = {
+                    'status'  : status.HTTP_401_UNAUTHORIZED,
+                    'message' : "Unsuccessful",
+                    'data' : request.data,
+                }
+            return Response(data)
