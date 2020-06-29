@@ -5,7 +5,7 @@ class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = [ 'id', 'company_name', 'phone', 'email', 'address', 'is_company', 'is_hospital',  'token']
+        fields = [ 'id', 'company_name', 'cac_reg_no', 'staff_pop', 'phone', 'email', 'address', 'is_company', 'is_hospital', 'password' ]
  
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:

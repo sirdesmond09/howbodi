@@ -35,8 +35,8 @@ def add_user(request):
 
             user = User.objects.create_user(**serializer.validated_data)
             token = Token.objects.create(user = user)
-            t = Token.objects.get(user=user)
-            user.token = t.key
+            # t = Token.objects.get(user=user)
+            # user.token = t.key
             user.save()
 
             serializer = UserSerializer(user)
