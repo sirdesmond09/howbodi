@@ -122,3 +122,9 @@ class YouthsPediatricSymptomAdmin(admin.ModelAdmin):
     list_display = ['id', 'question', 'never', 'sometimes', 'often', 'date_created']
     search_fields = ('question', )
     ordering = ('id', 'date_created')
+
+
+@admin.register(Assessment)
+class AssessmentAdmin(admin.ModelAdmin):
+    list_display = ['test', 'fullname', 'company', 'date_taken']
+    ordering = ('date_taken', )

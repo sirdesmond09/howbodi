@@ -4,6 +4,8 @@ from main import views
 app_name = 'main'
 
 urlpatterns = [
+    path('assessment/', views.assessment_taken),
+
     path('addiction/', views.addiction_questions_list),
     path('addiction/<int:pk>', views.addiction_question_detail),
     path('anxiety/', views.anxiety_questions_list),

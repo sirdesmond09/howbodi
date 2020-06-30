@@ -99,4 +99,9 @@ class YouthsPediatricSymptomSerializer(serializers.ModelSerializer):
 class TestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Test
-        fields = '__all__'        
+        fields = '__all__'     
+
+class AssessmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Assessment
+        fields = '__all__'           

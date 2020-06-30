@@ -1,5 +1,5 @@
 from django.db import models
-
+from account.models import Member
 
 class Test(models.Model):
     title = models.CharField(max_length = 150)
@@ -240,3 +240,12 @@ class ParentsPediatricSymptomQuestion(models.Model):
         return self.question 
 
 
+class Assessment(models.Model):
+    test       = models.ForeignKey(Test, on_delete=models.CASCADE, serialize = True)
+    user       = models.ForeignKey(Member, on_delete = models.CASCADE, serialize = True)
+    fullname   = models.CharField(max_length = 250)
+    company    = models.CharField(max_length=250)
+    date_taken = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.fullname

@@ -1955,3 +1955,48 @@ def test_list(request):
             return Response(data, status = status.HTTP_400_BAD_REQUEST)
 
 
+#get all tests
+@api_view(['GET', 'POST'])
+# @authentication_classes([TokenAuthentication,])
+# @permission_classes([IsAuthenticated])
+def assessment_taken(request):
+    if request.method == 'GET':
+        assessment = Assessment.objects.all()
+        serializer = AssessmentSerializer(assessment, many =True)
+
+        data = {
+                'status'  : status.HTTP_200_OK,
+                'message' : "Successful",
+                'data' : serializer.data,
+            }
+
+        return Response(data, status=status.HTTP_200_OK)
+
+    elif request.method == 'POST':
+        serializer = AssessmentSerializer(data = request.data)
+
+        if serializer.is_valid():
+            member = Member.objects.get(email = serializer.validated_data['user'])
+            member.assessment_taken += 1
+            member.save()
+
+            
+            serializer.save()
+            data = {
+                'status'  : status.HTTP_201_CREATED,
+                'message' : "Successfully added assessment",
+                'data' : serializer.data,
+            }
+
+            return Response(data, status = status.HTTP_201_CREATED)
+
+        else:
+            data = {
+                'status'  : status.HTTP_400_BAD_REQUEST,
+                'message' : "Unsuccessful",
+                'data' : serializer.errors,
+            }
+
+            return Response(data, status = status.HTTP_400_BAD_REQUEST)
+
+

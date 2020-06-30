@@ -49,6 +49,7 @@ class Member(models.Model):
     phone       = models.CharField(max_length = 20)
     address     = models.CharField(max_length=150)
     entity      = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,serialize = True, null = True)
+    assessment_taken = models.IntegerField(default = 0)
     password    = models.CharField(blank=True, max_length=300)
     date_joined = models.DateField(auto_now_add=True)
     
