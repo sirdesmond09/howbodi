@@ -128,13 +128,35 @@ def logins(request):
         
         user = authenticate(request, email = request.data['email'], password = request.data['password'])
         if user is not None:
-            data = {
-                'status'  : status.HTTP_202_ACCEPTED,
-                'message' : "Authenticated successfully",
-                'data' : request.data,
-            }
+            try:
+                company = User.objects.get(email = user.email)
+                serializer = UserSerializer(company)
 
-            return Response(data, status=status.HTTP_202_ACCEPTED)
+                data = {
+                    'status'  : status.HTTP_202_ACCEPTED,
+                    'message' : "Authenticated successfully",
+                    'data' : serializer.data,
+                }
+
+                return Response(data, status=status.HTTP_202_ACCEPTED)
+            
+            except User.DoesNotExist:
+
+                member = Member.objects.get(email = user.email)
+                serializer = MemberSerializer(member)
+
+                data = {
+                    'status'  : status.HTTP_202_ACCEPTED,
+                    'message' : "Authenticated successfully",
+                    'data' : serializer.data,
+                }
+
+                return Response(data, status=status.HTTP_202_ACCEPTED)
+
+                
+
+                
+
         else:
             data = {
                     'status'  : status.HTTP_401_UNAUTHORIZED,
