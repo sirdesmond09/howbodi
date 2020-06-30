@@ -243,6 +243,7 @@ class ParentsPediatricSymptomQuestion(models.Model):
 class Assessment(models.Model):
     test       = models.ForeignKey(Test, on_delete=models.CASCADE, serialize = True)
     user       = models.ForeignKey(Member, on_delete = models.CASCADE, serialize = True)
+    testname   = models.CharField(max_length = 250)
     fullname   = models.CharField(max_length = 250)
     company    = models.CharField(max_length=250)
     date_taken = models.DateField(auto_now_add=True)

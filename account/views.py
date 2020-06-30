@@ -164,3 +164,59 @@ def logins(request):
                     'data' : request.data,
                 }
             return Response(data)
+
+
+@api_view(['GET', 'POST'])
+def individuals(request):
+    if request.method == 'GET':
+        user = User.objects.get(is_individual = True)
+        try:
+            member = Member.objects.get_queryset().filter(entity = user)
+            
+            serializer = MemberSerializer(member, many =True)
+            data = {
+                    'status'  : status.HTTP_200_OK,
+                    'message' : "Successful",
+                    'data' : serializer.data,
+                }
+
+            return Response(data, status=status.HTTP_200_OK)
+            
+        except Member.DoesNotExist:
+            data = {
+                    'status'  : status.HTTP_404_NOT_FOUND,
+                    'message' : "Unsuccessful",
+                    'data' : "Individuals does not exist",
+                }
+
+            return Response(data, status=status.HTTP_404_NOT_FOUND)
+
+    elif request.method == 'POST':
+        
+        serializer = MemberSerializer(data = request.data)
+        
+        if serializer.is_valid():
+            if not serializer.data['entity']:
+                user = User.objects.get(is_individual =True)
+                serializer.validated_data['entity'] = user
+                serializer.validated_data['password'] = make_password(serializer.validated_data['password']) #hash the given password
+                member = Member.objects.create(**serializer.validated_data)
+                member.save()
+
+                serializer = MemberSerializer(member)
+                data = {
+                    'status'  : status.HTTP_201_CREATED,
+                    'message' : "Sign up successful",
+                    'data' : serializer.data,
+                }
+
+                return Response(data, status = status.HTTP_201_CREATED)
+
+        else:
+            data = {
+                'status'  : status.HTTP_400_BAD_REQUEST,
+                'message' : "Unsuccessful",
+                'data' : serializer.errors,
+            }
+
+            return Response(data, status = status.HTTP_400_BAD_REQUEST)
