@@ -81,31 +81,51 @@ def add_member(request):
         serializer = MemberSerializer(data = request.data)
         
         if serializer.is_valid():
-            if not serializer.data['entity']:
-                user = User.objects.get(is_individual =True)
-                serializer.validated_data['entity'] = user
-                serializer.validated_data['password'] = make_password(serializer.validated_data['password']) #hash the given password
-                member = Member.objects.create(**serializer.validated_data)
-                member.save()
+            serializer.validated_data['password'] = make_password(serializer.validated_data['password']) #hash the given password                
+            member = Member.objects.create(**serializer.validated_data)
+            member.save()
 
-                serializer = MemberSerializer(member)
+            serializer = MemberSerializer(member)
+            data = {
+                'status'  : status.HTTP_201_CREATED,
+                'message' : "Sign up successful",
+                'data' : serializer.data,
+            }
+
+            return Response(data, status = status.HTTP_201_CREATED)
+
+        else:
+            data = {
+                'status'  : status.HTTP_400_BAD_REQUEST,
+                'message' : "Unsuccessful",
+                'data' : serializer.errors,
+            }
+
+            return Response(data, status = status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['POST'])
+# @authentication_classes([TokenAuthentication])
+# @permission_classes([IsAuthenticated])
+def upload_member(request):
+
+    if request.method == 'POST':
+        
+        serializer = MemberSerializer(data = request.data, many =True)
+        
+        if serializer.is_valid():
+     
+
+                for i in serializer.validated_data:
+                    
+                    member = Member.objects.create(**i)
+                    member.save()
+
+                
                 data = {
                     'status'  : status.HTTP_201_CREATED,
-                    'message' : "Sign up successful",
-                    'data' : serializer.data,
-                }
-
-                return Response(data, status = status.HTTP_201_CREATED)
-            
-            else:
-                serializer.validated_data['password'] = make_password(serializer.validated_data['password']) #hash the given password                
-                member = Member.objects.create(**serializer.validated_data)
-                member.save()
-
-                serializer = MemberSerializer(member)
-                data = {
-                    'status'  : status.HTTP_201_CREATED,
-                    'message' : "Sign up successful",
+                    'message' : "Upload successful",
                     'data' : serializer.data,
                 }
 
@@ -119,6 +139,7 @@ def add_member(request):
             }
 
             return Response(data, status = status.HTTP_400_BAD_REQUEST)
+
 
 
 @api_view([ 'POST'])
