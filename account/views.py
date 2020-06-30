@@ -81,7 +81,10 @@ def add_member(request):
         serializer = MemberSerializer(data = request.data)
         
         if serializer.is_valid():
-            serializer.validated_data['password'] = make_password(serializer.validated_data['password']) #hash the given password                
+            serializer.validated_data['password'] = make_password(serializer.validated_data['password']) #hash the given password
+            
+            company = User.objects.get(company_name =serializer.validated_data['entity'])              
+            serializer.validated_data['company'] = company.company_name   
             member = Member.objects.create(**serializer.validated_data)
             member.save()
 
@@ -118,6 +121,8 @@ def upload_member(request):
      
 
                 for i in serializer.validated_data:
+                    company = User.objects.get(company_name =i['entity'])              
+                    i['company'] = company.company_name
                     
                     member = Member.objects.create(**i)
                     member.save()

@@ -48,6 +48,7 @@ class Member(models.Model):
     email       = models.EmailField(unique = True)
     phone       = models.CharField(max_length = 20)
     address     = models.CharField(max_length=150)
+    company     = models.CharField(max_length = 150, blank = True)
     entity      = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,serialize = True, null = True)
     assessment_taken = models.IntegerField(default = 0)
     password    = models.CharField(blank=True, max_length=300)
