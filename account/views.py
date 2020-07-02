@@ -210,7 +210,7 @@ def company_detail(request, pk):
         return Response(data, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = UserSerializer(individual)
+        serializer = UserSerializer(company)
         
         data = {
                 'status'  : status.HTTP_200_OK,
