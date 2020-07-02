@@ -143,5 +143,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'account.authentication.CustomUserAuthBackend',
     'account.authentication.CustomMemberAuthBackend',
+    'account.authentication.CustomIndividualAuthBackend',
+
 
 ]

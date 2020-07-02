@@ -2,7 +2,7 @@
 My custom authentication
 Authenticate using an e-mail address.
 """
-from .models import User, Member
+from .models import User, Member, Individual
 
 class CustomUserAuthBackend(object):
 
@@ -38,4 +38,22 @@ class CustomMemberAuthBackend(object):
         try:
             return Member.objects.get(pk=member_id)
         except Member.DoesNotExist:
+            return None
+
+class CustomIndividualAuthBackend(object):
+    
+    def authenticate(self, request, email=None, password=None):
+        try:
+            individual = Individual.objects.get(email=email)
+            if individual.check_password(password):
+                return individual
+        
+            return None
+        except Individual.DoesNotExist:
+            return None
+    
+    def get_individual(self, individual_id):
+        try:
+            return Individual.objects.get(pk=individual_id)
+        except Individual.DoesNotExist:
             return None
